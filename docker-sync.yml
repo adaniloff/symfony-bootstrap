@@ -1,0 +1,19 @@
+version: '2'
+options:
+  compose-dev-file-path: 'docker-compose.yml'
+  unison_image: 'eugenmayer/unison:2.51.2.1'
+syncs:
+  pokewords-sync:
+    notify_terminal: true
+    src: '../'
+    sync_strategy: 'unison'
+    sync_userid: '502'
+    sync_args:
+      - "-ignore='Path .idea'"
+      - "-ignore='Path tmp/.idea'"
+      - "-ignore='Path .vscode'"
+      - "-ignore='Path tmp/.vscode'"
+      - "-ignore='Path .git'"
+      - "-ignore='Path tmp/.git'"
+      - "-ignore='Path tmp/var/cache/*'"
+      - "-ignore='Path tmp/var/logs/*'"
