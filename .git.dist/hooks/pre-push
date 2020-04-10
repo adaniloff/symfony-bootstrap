@@ -1,0 +1,29 @@
+#!/usr/bin/php
+<?php
+
+exec('git rev-parse --abbrev-ref HEAD', $output);
+$branch = $output[0];
+
+exec("git log --oneline --cherry-pick --left-right HEAD...origin/$branch", $output);
+unset($output[0]);
+
+$precommit = "[<>]\s\w{7}\s";
+$pattern = "#^$precommit\[[~+!*\-]\]\s[^\\r\\n]{8,72}$#i";
+
+$abort = false;
+foreach ($output as $commit) {
+    if (">" === $commit[0]) {
+        continue;
+    }
+    if (!preg_match($pattern, $commit)) {
+        $abort = true;
+        echo "Invalid commit message: $commit \r\n";
+    }
+}
+
+if ($abort) {
+    echo "Aborting because of invalid commit message(s). Please use `git rebase -i` in order to refine your messages.\r\n";
+    exit(1);
+}
+
+exit(0);

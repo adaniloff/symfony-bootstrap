@@ -1,0 +1,25 @@
+#!/usr/bin/php
+<?php
+$message = fgets(fopen($_SERVER['argv'][1], 'r'));
+$length = strlen($message);
+
+$base = 5;
+$min = 8;
+$max = 72;
+
+switch (true) {
+    case $length - $base < $min:
+        echo "Your commit message subject (" . ($length - $base) . " chars.) is too short: $min chars. min.";
+        exit(1);
+
+    case $length - $base > $max:
+        echo "Your commit message subject (" . ($length - $base) . " chars.) is too long: $max chars. max.";
+        exit(1);
+}
+
+$pattern = "#^\[[~+!*\-]\]\s[^\\r\\n]{" . $min . "," . $max . "}$#i";
+if (!preg_match($pattern, $message)) {
+    print "Your commit message does not follow our message recommandations: $message";
+    exit(1);
+}
+exit(0);
