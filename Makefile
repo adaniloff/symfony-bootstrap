@@ -8,6 +8,14 @@ DOCKER        = docker-compose
 CS_FIXER      = $(EXEC_PHP) vendor/friendsofphp/php-cs-fixer/php-cs-fixer
 .DEFAULT_GOAL = help
 
+SUPPORTED_COMMANDS := sf
+SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))
+ifneq "$(SUPPORTS_MAKE_ARGS)" ""
+  COMMAND_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  COMMAND_ARGS := $(subst :,\:,$(COMMAND_ARGS))
+  $(eval $(COMMAND_ARGS):;@:)
+endif
+
 ## -- Misc -----------------------------------------------------------
 help: ## Outputs this help screen
 	@grep -E '(^[a-zA-Z0-9_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
@@ -34,7 +42,7 @@ update: composer.json ## Update vendors according to the composer.json file
 
 ## -- Symfony -----------------------------------------------------------
 sf: ## List all Symfony commands
-	$(DC) $(SYMFONY)
+	$(DC) $(SYMFONY) $(COMMAND_ARGS)
 
 cc: ## Clear the cache. DID YOU CLEAR YOUR CACHE????
 	$(DC) $(SYMFONY) c:c
