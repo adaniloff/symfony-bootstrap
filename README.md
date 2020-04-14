@@ -45,7 +45,7 @@ $ make install
 ```
 
 This will install your SF5 stack.
-You can now access to the SF commands through the Makefile, with `make sf`.
+You can now access to the SF commands through the Makefile, with `make console`.
 
 Simply run `make` to get help on your Makefile commands at any time. 
 
