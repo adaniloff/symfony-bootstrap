@@ -5,7 +5,7 @@ else
   CMD =
 endif
 DOCKER_EXEC     = docker exec -w $(PROJECT_PATH)
-DOCKER_EXEC_WWW = $(DOCKER_EXEC) --user=www-data
+DOCKER_EXEC_WWW = $(DOCKER_EXEC) --user=dev
 EXEC_PHP        = php
 SYMFONY         = $(EXEC_PHP) bin/console
 COMPOSER        = composer
