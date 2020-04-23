@@ -61,5 +61,17 @@ purge: ## Purge cache and logs
 help: ## Outputs this help screen
 	@grep -E '(^[a-zA-Z0-9_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
-fix-cs: ## Run cs-fixer
-	$(CMD) $(CS_FIXER) fix src/
+.php_cs: .php_cs.dist ## Initialize & warn about fix-cs config changes
+	@if [ -f .php_cs ]; \
+	then\
+		echo '\033[1;41m/!\ The .php_cs.dist file has changed. Please check your .php_cs file (this message will not be displayed again).\033[0m';\
+		touch .php_cs;\
+		exit 1;\
+	else\
+		echo cp .php_cs.dist .php_cs;\
+		cp .php_cs.dist .php_cs;\
+	fi
+
+fix-cs: .php_cs ## Run cs-fixer
+	$(CMD) $(CS_FIXER) fix src/ tests/ --config=.php_cs
+
