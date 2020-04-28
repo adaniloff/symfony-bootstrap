@@ -74,7 +74,7 @@ help: ## Outputs this help screen
 
 fix-cs: .php_cs ## Run cs-fixer
 ifneq "$(COMMAND_ARGS)" ""
-	$(CMD) $(CS_FIXER) fix $(COMMAND_ARGS)/ --config=.php_cs
+	$(CMD) $(CS_FIXER) fix $(COMMAND_ARGS) --config=.php_cs
 else
-	@echo 'please specify directory you want to fix as follow: make fix-cs src'
+	@echo 'Please specify the directories in which you want to run the fixer. For example: "make fix-cs src/ tests/".'
 endif
