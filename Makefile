@@ -13,7 +13,7 @@ DC              = docker-compose
 CS_FIXER        = $(EXEC_PHP) vendor/friendsofphp/php-cs-fixer/php-cs-fixer
 .DEFAULT_GOAL   = help
 
-SUPPORTED_COMMANDS := console
+SUPPORTED_COMMANDS := console fix-cs
 SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))
 ifneq "$(SUPPORTS_MAKE_ARGS)" ""
   COMMAND_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
@@ -73,5 +73,8 @@ help: ## Outputs this help screen
 	fi
 
 fix-cs: .php_cs ## Run cs-fixer
-	$(CMD) $(CS_FIXER) fix src/ tests/ --config=.php_cs
-
+ifneq "$(COMMAND_ARGS)" ""
+	$(CMD) $(CS_FIXER) fix $(COMMAND_ARGS)/ --config=.php_cs
+else
+	@echo 'please specify directory you want to fix as follow: make fix-cs src'
+endif
