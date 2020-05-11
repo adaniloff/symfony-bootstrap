@@ -10,17 +10,15 @@ services:
           - .:$PROJECT_PATH
         depends_on:
           - php
-        environment:
-          - PROJECT_DIR=$PROJECT_DIR
-          - PROJECT_NAME=$PROJECT_NAME
-          - PROJECT_PATH=$PROJECT_PATH
+        env_file:
+          - .env.local
+          - .env
 
     php:
         build: .docker/php
         container_name: sf5_php
         volumes:
           - .:$PROJECT_PATH
-        environment:
-          - PROJECT_DIR=$PROJECT_DIR
-          - PROJECT_NAME=$PROJECT_NAME
-          - PROJECT_PATH=$PROJECT_PATH
+        env_file:
+          - .env.local
+          - .env
