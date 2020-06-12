@@ -10,6 +10,8 @@ services:
           - .:$PROJECT_PATH
         depends_on:
           - php
+        environment:
+          - UID=${UID}
         env_file:
           - .env.local
           - .env
@@ -19,6 +21,8 @@ services:
         container_name: sf5_php
         volumes:
           - .:$PROJECT_PATH
+        environment:
+          - UID=${UID}
         env_file:
           - .env.local
           - .env

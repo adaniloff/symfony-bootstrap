@@ -35,13 +35,13 @@ cd my-new-project
 Prepare the docker stack:
 
 ```
-$ docker-compose build && make up
+$ make init
 ```
 
 At this point, you might decide to setup your environment:
 
 ```
-$ make install
+$ make up && make install
 ```
 
 This will install your SF5 stack.

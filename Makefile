@@ -1,9 +1,13 @@
+ifndef UID
+  UID = $(shell id -u)
+endif
 ifndef PROJECT_PATH
   PROJECT_PATH    = /home/wwwroot/sf5
   CMD = $(DOCKER_EXEC_WWW) sf5_php
 else
   CMD =
 endif
+
 DOCKER_EXEC     = docker exec -w $(PROJECT_PATH)
 DOCKER_EXEC_WWW = $(DOCKER_EXEC) --user=dev
 EXEC_PHP        = php
@@ -22,6 +26,12 @@ ifneq "$(SUPPORTS_MAKE_ARGS)" ""
 endif
 
 ## -- Docker -----------------------------------------------------------
+.env.local:
+	touch .env.local
+
+init: .env.local ## Initialize the project (build images, etc)
+	$(DC) build --build-arg PROJECT_PATH=$(PROJECT_PATH) --build-arg UID=$(UID)
+
 up: ## Start the containers
 	$(DC) up -d
 
