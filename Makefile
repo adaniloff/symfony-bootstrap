@@ -3,7 +3,7 @@ ifndef UID
 endif
 ifndef PROJECT_PATH
   PROJECT_PATH    = /home/wwwroot/sf5
-  CMD = $(DOCKER_EXEC_WWW) sf5_php
+  CMD = $(DOCKER_EXEC_WWW) -it sf5_php
 else
   CMD =
 endif
