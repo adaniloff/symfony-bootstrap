@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:8.0-fpm
 
 ARG UID
 ENV UID=$UID
@@ -12,8 +12,8 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends vim curl debconf git apt-transport-https apt-utils \
     build-essential locales acl mailutils wget zip unzip \
     gnupg gnupg1 gnupg2
-COPY php.ini /etc/php/7.4/php.ini
-COPY php-fpm-pool.conf /etc/php/7.4/pool.d/www.conf
+COPY php.ini /etc/php/8.0/php.ini
+COPY php-fpm-pool.conf /etc/php/8.0/pool.d/www.conf
 
 RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
    mv composer.phar /usr/local/bin/composer
